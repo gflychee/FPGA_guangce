@@ -21,7 +21,7 @@ struct mdclient *pclient;
 
 
 long get_exchtime(const char* UpdateTime, int UpdateMillisec) {
-	int hours = 0;
+    int hours = 0;
     int minutes = 0; 
     int seconds = 0;
     sscanf(UpdateTime, "%d:%d:%d", &hours, &minutes, &seconds);
@@ -50,10 +50,10 @@ class handleClass
 public:
     void handleL2(Level2QuoteDataT *pData)
     {
-    	long rece_time = currtime();
-    	long exchtime = get_exchtime(pData->UpdateTime, pData->UpdateMillisec);
-    	if (((struct fpga_shfe_mc_client *)pclient->container)->debug) {
-    		printf("%s.%d,%ld,%s,%f,%d,%f,%f,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n",
+        long rece_time = currtime();
+        long exchtime = get_exchtime(pData->UpdateTime, pData->UpdateMillisec);
+        if (((struct fpga_shfe_mc_client *)pclient->container)->debug) {
+            printf("%s.%d,%ld,%s,%f,%d,%f,%f,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d,%f,%d\n",
                             pData->UpdateTime, pData->UpdateMillisec, exchtime, \
                             pData->InstrumentID, pData->LastPrice, pData->Volume, pData->Turnover, pData->OpenInterest, \
                             pData->BidPrice1, pData->BidVolume1, pData->AskPrice1, pData->AskVolume1, \
@@ -61,54 +61,54 @@ public:
                             pData->BidPrice3, pData->BidVolume3, pData->AskPrice3, pData->AskVolume3, \
                             pData->BidPrice4, pData->BidVolume4, pData->AskPrice4, pData->AskVolume4, \
                             pData->BidPrice5, pData->BidVolume5, pData->AskPrice5, pData->AskVolume5);
-    	}
-    	const int insidx = ins2idx(pclient->instab, (const char *)pData->InstrumentID);
-    	if (insidx == -1)
-        	return;
+        }
+        const int insidx = ins2idx(pclient->instab, (const char *)pData->InstrumentID);
+        if (insidx == -1)
+            return;
 
-    	uint32_t mdslot;
-    	struct md_static *ms = (struct md_static *)get_md_static(pclient->instab, insidx);
-    	struct md_snapshot *md = snapshottab_get_next_slot(pclient->sstab, insidx, &mdslot);
-    	md->type = MDT_Level5;
-    	md->exchange_time = exchtime;
-    	md->recv_time = rece_time;
-    	md->last_price = pData->LastPrice != DBL_MAX ? pData->LastPrice : 0.0;
-    	md->volume = pData->Volume;
-    	md->turnover = pData->Turnover;
-    	md->open_interest = (int)pData->OpenInterest;
-    	md->bid_price[0] = pData->BidPrice1 != DBL_MAX ? pData->BidPrice1 : 0.0;
-    	md->bid_size[0] = pData->BidVolume1;
-    	md->ask_price[0] = pData->AskPrice1 != DBL_MAX ? pData->AskPrice1 : 0.0;
-    	md->ask_size[0] = pData->AskVolume1;
-    	md->bid_price[1] = pData->BidPrice2 != DBL_MAX ? pData->BidPrice2 : 0.0;
-    	md->bid_size[1] = pData->BidVolume2;
-    	md->ask_price[1] = pData->AskPrice2 != DBL_MAX ? pData->AskPrice2 : 0.0;
-    	md->ask_size[1] = pData->AskVolume2;
-    	md->bid_price[2] = pData->BidPrice3 != DBL_MAX ? pData->BidPrice3 : 0.0;
-    	md->bid_size[2] = pData->BidVolume3;
-    	md->ask_price[2] = pData->AskPrice3 != DBL_MAX ? pData->AskPrice3 : 0.0;
-    	md->ask_size[2] = pData->AskVolume3;
-    	md->bid_price[3] = pData->BidPrice4 != DBL_MAX ? pData->BidPrice4 : 0.0;
-    	md->bid_size[3] = pData->BidVolume4;
-    	md->ask_price[3] = pData->AskPrice4 != DBL_MAX ? pData->AskPrice4 : 0.0;
-    	md->ask_size[3] = pData->AskVolume4;
-    	md->bid_price[4] = pData->BidPrice5 != DBL_MAX ? pData->BidPrice5 : 0.0;
-    	md->bid_size[4] = pData->BidVolume5;
-    	md->ask_price[4] = pData->AskPrice5 != DBL_MAX ? pData->AskPrice5 : 0.0;
-    	md->ask_size[4] = pData->AskVolume5;
+        uint32_t mdslot;
+        struct md_static *ms = (struct md_static *)get_md_static(pclient->instab, insidx);
+        struct md_snapshot *md = snapshottab_get_next_slot(pclient->sstab, insidx, &mdslot);
+        md->type = MDT_Level5;
+        md->exchange_time = exchtime;
+        md->recv_time = rece_time;
+        md->last_price = pData->LastPrice != DBL_MAX ? pData->LastPrice : 0.0;
+        md->volume = pData->Volume;
+        md->turnover = pData->Turnover;
+        md->open_interest = (int)pData->OpenInterest;
+        md->bid_price[0] = pData->BidPrice1 != DBL_MAX ? pData->BidPrice1 : 0.0;
+        md->bid_size[0] = pData->BidVolume1;
+        md->ask_price[0] = pData->AskPrice1 != DBL_MAX ? pData->AskPrice1 : 0.0;
+        md->ask_size[0] = pData->AskVolume1;
+        md->bid_price[1] = pData->BidPrice2 != DBL_MAX ? pData->BidPrice2 : 0.0;
+        md->bid_size[1] = pData->BidVolume2;
+        md->ask_price[1] = pData->AskPrice2 != DBL_MAX ? pData->AskPrice2 : 0.0;
+        md->ask_size[1] = pData->AskVolume2;
+        md->bid_price[2] = pData->BidPrice3 != DBL_MAX ? pData->BidPrice3 : 0.0;
+        md->bid_size[2] = pData->BidVolume3;
+        md->ask_price[2] = pData->AskPrice3 != DBL_MAX ? pData->AskPrice3 : 0.0;
+        md->ask_size[2] = pData->AskVolume3;
+        md->bid_price[3] = pData->BidPrice4 != DBL_MAX ? pData->BidPrice4 : 0.0;
+        md->bid_size[3] = pData->BidVolume4;
+        md->ask_price[3] = pData->AskPrice4 != DBL_MAX ? pData->AskPrice4 : 0.0;
+        md->ask_size[3] = pData->AskVolume4;
+        md->bid_price[4] = pData->BidPrice5 != DBL_MAX ? pData->BidPrice5 : 0.0;
+        md->bid_size[4] = pData->BidVolume5;
+        md->ask_price[4] = pData->AskPrice5 != DBL_MAX ? pData->AskPrice5 : 0.0;
+        md->ask_size[4] = pData->AskVolume5;
 
-    	md->decode_time = currtime();
-    	pclient->output(pclient, ms, mdslot);
+        md->decode_time = currtime();
+        pclient->output(pclient, ms, mdslot);
     }
 };
 
 
 static void run(struct mdclient *client) {
-	printf("api version: %s", TacFeedGetApiVersion());
+    printf("api version: %s", TacFeedGetApiVersion());
     struct fpga_shfe_mc_client *fpga_mc = (struct fpga_shfe_mc_client *)client->container;
     pclient = client;
 
-    TacFeedSetCpuAffinity(TACFEED_BIND_CORE_ID);
+    // TacFeedSetCpuAffinity(TACFEED_BIND_CORE_ID);
     
     handleClass *H = new handleClass();
 
