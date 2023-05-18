@@ -5,7 +5,7 @@ CXX := g++
 ########## for frontend dev BEGIN ###########################
 module_list := wfmd-fpga-shfe-mc.so
 wfmd-fpga-shfe-mc.so: tacfeed_shfe.o
-        $(CXX) -shared -o $@ $^ -L ./lib -ltacfeedmd_tacnic -lrt -lpthread
+	$(CXX) -shared -o $@ $^ -L ./lib -ltacfeedmd_tacnic -lrt -lpthread
 ########## for frontend dev END #############################
 
 DEST = ~/.local
@@ -15,10 +15,10 @@ CXXFLAGS := $(CFLAGS) --std=c++11
 all: $(module_list)
 
 install: $(module_list)
-        install -d $(DEST)/lib
-        install -p $(module_list) $(DEST)/lib
+	install -d $(DEST)/lib
+	install -p $(module_list) $(DEST)/lib
 
 clean:
-        $(RM) $(module_list) *.o
+	$(RM) $(module_list) *.o
 
 .PHONY: all install clean
